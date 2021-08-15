@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     public bool playerIsAlive = true; //Is the player currently alive?
     public bool playerCanMove = false; //Can the player currently move?
 
+    public bool isOnPlatform = false;
+    public bool isInWater = false;
+
     public AudioClip jumpSound;
     public AudioClip deathSound;
 
@@ -59,6 +62,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        if(playerIsAlive)
+        {
+            if (isInWater && !isOnPlatform)
+                KillPlayer();
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(playerIsAlive)
@@ -67,9 +79,36 @@ public class Player : MonoBehaviour
             {
                 KillPlayer();
             }
-        }
-        
+            else if (collision.transform.GetComponent<Platform>() != null)
+            {
+                transform.SetParent(collision.transform);
+                isOnPlatform = true;
+            }
+            else if(collision.transform.tag == "Water")
+            {
+                //KillPlayer();
+                isInWater = true;
+            }
+        } 
     }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (playerIsAlive)
+        {
+            if (collision.transform.GetComponent<Platform>() != null)
+            {
+                transform.SetParent(null);
+                isOnPlatform = false;
+            }
+            else if (collision.transform.tag == "Water")
+            {
+                //KillPlayer();
+                isInWater = false;
+            }
+        }
+    }
+
 
     void KillPlayer()
     {
