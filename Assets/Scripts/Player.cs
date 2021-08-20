@@ -41,22 +41,22 @@ public class Player : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.UpArrow) && transform.position.y < myGameManager.levelConstraintTop)
             {
-                transform.Translate(new Vector2(0, 1));
+                transform.Translate(new Vector2(0, 0.92f));
                 gameAudio.PlayOneShot(jumpSound);
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) && transform.position.y > myGameManager.levelConstraintBottom)
             {
-                transform.Translate(new Vector2(0, -1));
+                transform.Translate(new Vector2(0, -0.92f));
                 gameAudio.PlayOneShot(jumpSound);
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > myGameManager.levelConstraintLeft)
             {
-                transform.Translate(new Vector2(-1, 0));
+                transform.Translate(new Vector2(-0.92f, 0));
                 gameAudio.PlayOneShot(jumpSound);
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) && transform.position.x < myGameManager.levelConstraintRight)
             {
-                transform.Translate(new Vector2(1, 0));
+                transform.Translate(new Vector2(0.92f, 0));
                 gameAudio.PlayOneShot(jumpSound);
             }
         }
