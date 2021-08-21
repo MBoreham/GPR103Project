@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// This script is to be attached to a GameObject called GameManager in the scene. It is to be used to manager the settings and overarching gameplay loop.
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     [Header("Scoring")]
     public int currentScore = 0; //The current score in this round.
     public int highScore = 0; //The highest score achieved either in this session or over the lifetime of the game.
+    public TMP_Text currentScoreUI;
 
     [Header("Playable Area")]
     public float levelConstraintTop; //The maximum positive Y value of the playable space.
@@ -25,7 +27,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        UpdateScore(-currentScore);
+        currentScoreUI.text = "0";
     }
 
     // Update is called once per frame
@@ -33,4 +36,11 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    public void UpdateScore(int scoreAount)
+    {
+        currentScore += scoreAount;
+        currentScoreUI.text = currentScore.ToString();
+    }
+
 }

@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
 
     public bool isOnPlatform = false;
     public bool isInWater = false;
+    public bool hasKey = false;
 
     public AudioClip jumpSound;
     public AudioClip deathSound;
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour
             {
                 transform.Translate(new Vector2(0, 0.92f));
                 gameAudio.PlayOneShot(jumpSound);
+                myGameManager.UpdateScore(1);
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) && transform.position.y > myGameManager.levelConstraintBottom)
             {
@@ -88,6 +90,12 @@ public class Player : MonoBehaviour
             {
                 //KillPlayer();
                 isInWater = true;
+            }
+            else if(collision.transform.tag == "Key")
+            {
+                myGameManager.UpdateScore(10);
+                hasKey = true;
+                Destroy(collision.gameObject);
             }
         } 
     }
