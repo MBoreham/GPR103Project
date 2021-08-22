@@ -17,6 +17,8 @@ public class Platform : MonoBehaviour
     }
 
     // Update is called once per frame
+    // Sets the staring position of moving objects
+    // resets them back when they hit end location
     void Update()
     {
         transform.Translate(Vector2.left * Time.deltaTime * speed * moveDirection);

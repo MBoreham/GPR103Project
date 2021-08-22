@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 /// <summary>
 /// This script is to be attached to a GameObject called GameManager in the scene. It is to be used to manager the settings and overarching gameplay loop.
@@ -21,26 +23,55 @@ public class GameManager : MonoBehaviour
 
     [Header("Gameplay Loop")]
     public bool isGameRunning; //Is the gameplay part of the game current active?
-    public float totalGameTime; //The maximum amount of time or the total time avilable to the player.
+    public float totalLives = 5; //The maximum amount of time or the total time avilable to the player.
     public float gameTimeRemaining; //The current elapsed time
 
+    [Header("UI")]
+    // returns either the win or lose message
+    public TMP_Text uiGameOverMessage;
+    public TMP_Text uiScore; // returns the current score
+
+    public MainMenu myUI; // object of Main Menu class
+
+    public void Awake()
+    {
+        myUI = FindObjectOfType<MainMenu>();
+    }
+
+    
     // Start is called before the first frame update
     void Start()
     {
-        UpdateScore(-currentScore);
+        UpdateScore(-currentScore); // change score
         currentScoreUI.text = "0";
     }
 
+    
     // Update is called once per frame
     void Update()
     {
         
     }
 
+    // updates and outputs the score
     public void UpdateScore(int scoreAount)
     {
         currentScore += scoreAount;
         currentScoreUI.text = currentScore.ToString();
     }
 
+
+    // displays a message based upon if the player has won or lost
+    public void GameOver(bool isWin)
+    {
+        if(isWin == true)
+        {
+            uiGameOverMessage.text = "You Won!";
+        }
+        else
+        {
+            uiGameOverMessage.text = "You Lost!";
+        }
+        myUI.uiGameOverWindow.SetActive(true);
+    }
 }
